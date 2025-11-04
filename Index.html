@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precizni Keramičarski Radovi | Moderna Ugradnja i Dizajn</title>
+    <!-- Učitavanje Tailwind CSS-a --><script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Konfiguracija Tailwind-a sa prilagođenim bojama i fontom Inter
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-teal': '#06B6D4', // Cyan-500 za primarnu boju (sveže i moderno)
+                        'secondary-dark': '#1F2937', // Gray-800 za pozadine i tekst
+                        'bg-light': '#F9FAFB', // Gray-50 za svetle sekcije
+                        'bg-mid': '#E5E7EB', // Gray-200 za suptilne pozadine
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Globalni reset za bolju estetiku */
+        .shadow-3d {
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 5px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Stilovi za pozadinsku sliku Hero sekcije - FOKUS NA DETALJIMA UGRADNJE */
+        .hero-background {
+            background-image: url('https://images.unsplash.com/photo-1627995166687-0b1e3b3c3b0f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; 
+            background-repeat: no-repeat;
+        }
+
+        /* SLOJ PREKO SLIKE: Ojačana transparentnost za maksimalnu čitljivost belog teksta */
+        .hero-overlay {
+            background-color: rgba(31, 41, 55, 0.85); /* Jači Tamniji sloj iznad pozadine (Gray-800 sa 85% opacity) */
+        }
+        
+        /* CSS za animaciju (Fade-Up) */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans text-secondary-dark bg-bg-light">
+
+    <!-- Zaglavlje & Navigacija --><header class="sticky top-0 z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4 md:justify-start md:space-x-10">
+                <div class="flex justify-start lg:w-0 lg:flex-1">
+                    <a href="#" class="flex items-center space-x-2">
+                        <!-- Ikona Keramičarskih Radova (Moderna, oštra linija) --><svg class="h-8 w-8 text-primary-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M4 17.5l8-5 8 5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <path d="M4 12.5l8-5 8 5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <path d="M4 7.5l8-5 8 5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <path d="M4 17.5v3a1 1 0 001 1h14a1 1 0 001-1v-3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        </svg>
+                        <span class="text-xl font-extrabold text-secondary-dark">PRECIZNI KERAMIČARSKI RADOVI</span>
+                    </a>
+                </div>
+                <!-- Navigacija za Desktop --><nav class="hidden md:flex space-x-8">
+                    <a href="#services" class="text-base font-medium text-gray-700 hover:text-primary-teal transition duration-150">Usluge</a>
+                    <a href="#why-us" class="text-base font-medium text-gray-700 hover:text-primary-teal transition duration-150">Prednosti</a>
+                    <a href="#portfolio" class="text-base font-medium text-gray-700 hover:text-primary-teal transition duration-150">Portfolijo</a>
+                    <a href="#contact" class="text-base font-medium text-gray-700 hover:text-primary-teal transition duration-150">Kontakt</a>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-teal">
+                        <!-- Ikona Mobilnog Menija --><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobilni Meni (skriven po podrazumevanoj vrednosti) --><div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Usluge</a>
+                <a href="#why-us" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Prednosti</a>
+                <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Portfolijo</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Kontakt</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Sekcija (Velika i Upečatljiva) -->
+    <main>
+        <div class="relative min-h-[70vh] flex items-center justify-center hero-background">
+            <div class="hero-overlay absolute inset-0"></div> 
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20 py-20">
+                <h1 class="text-5xl md:text-7xl tracking-tight font-extrabold text-white">
+                    <span class="block">Keramika Vrhunskog Kvaliteta</span>
+                    <span class="block text-primary-teal mt-2">Dizajnirana da Traje.</span>
+                </h1>
+                <p class="mt-6 text-xl text-gray-200 max-w-3xl mx-auto">
+                    Specijalizovani smo za ugradnju velikih formata, prirodnog kamena i složenih mozaika. Pretvaramo Vašu viziju u realnost uz **garanciju preciznosti**.
+                </p>
+                <div class="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#contact" class="px-8 py-4 border border-transparent text-lg font-medium rounded-xl text-white bg-primary-teal hover:bg-cyan-700 shadow-3d transition duration-300 transform hover:scale-105">
+                        Zatražite Besplatnu Ponudu
+                    </a>
+                    <a href="#portfolio" class="px-8 py-4 border-2 border-primary-teal text-lg font-medium rounded-xl text-primary-teal bg-white hover:bg-primary-teal hover:text-white transition duration-300 transform hover:scale-105">
+                        Istražite Portfolijo
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        ---
+        <!-- Sekcija Usluga (Čiste kartice) -->
+        <section id="services" class="py-20 bg-white fade-up">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-base text-primary-teal font-semibold tracking-wide uppercase">Naša Stručnost</h2>
+                    <p class="mt-2 text-4xl font-extrabold tracking-tight text-secondary-dark">
+                        Sveobuhvatna Rešenja za Oblaganje
+                    </p>
+                </div>
+
+                <div class="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
+                    <!-- Usluga 1: Kuhinja i Kupatilo -->
+                    <div class="bg-bg-light p-8 rounded-xl shadow-lg border-t-4 border-primary-teal hover:shadow-xl transition duration-300 fade-up">
+                        <span class="inline-flex items-center justify-center p-3 text-white bg-primary-teal rounded-full shadow-md">
+                            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-2-2h-8.856a2 2 0 00-2 2M15 11V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v5m10 0h-4a2 2 0 01-2-2v-4a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2z" /></svg>
+                        </span>
+                        <h3 class="mt-6 text-xl font-bold text-secondary-dark">Kupatila & Hidroizolacija</h3>
+                        <p class="mt-3 text-gray-600">
+                            Kompletna ugradnja keramike sa profesionalnom višeslojnom hidroizolacijom, ravnanje podova i zidova pre oblaganja.
+                        </p>
+                    </div>
+
+                    <!-- Usluga 2: Podovi -->
+                    <div class="bg-bg-light p-8 rounded-xl shadow-lg border-t-4 border-primary-teal hover:shadow-xl transition duration-300 fade-up" style="transition-delay: 0.1s;">
+                        <span class="inline-flex items-center justify-center p-3 text-white bg-primary-teal rounded-full shadow-md">
+                            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                        </span>
+                        <h3 class="mt-6 text-xl font-bold text-secondary-dark">Ugradnja Velikih Formata</h3>
+                        <p class="mt-3 text-gray-600">
+                            Precizna nivelacija i ugradnja keramičkih pločica velikog formata (60x120, 120x120, itd.) uz minimalne fuge.
+                        </p>
+                    </div>
+
+                    <!-- Usluga 3: Popravka i Održavanje -->
+                    <div class="bg-bg-light p-8 rounded-xl shadow-lg border-t-4 border-primary-teal hover:shadow-xl transition duration-300 fade-up" style="transition-delay: 0.2s;">
+                        <span class="inline-flex items-center justify-center p-3 text-white bg-primary-teal rounded-full shadow-md">
+                            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8h12a2 2 0 002-2v-3.586a1 1 0 00-.293-.707l-2.414-2.414A1 1 0 0015 11.586V10a2 2 0 00-2-2h-2a2 2 0 00-2 2v1.586a1 1 0 00-.293.707l-2.414 2.414A1 1 0 005 14.414V18a2 2 0 002 2z" /></svg>
+                        </span>
+                        <h3 class="mt-6 text-xl font-bold text-secondary-dark">Sanacija i Mozaici</h3>
+                        <p class="mt-3 text-gray-600">
+                            Sanacija oštećenih površina, obnova i zamena fuga, te stručna ugradnja dekorativnih mozaika i listela.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        ---
+        <!-- Sekcija Zašto Mi? (Ključne prednosti - Veći fokus na brojevima) -->
+        <section id="why-us" class="py-20 bg-bg-mid fade-up">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-base text-secondary-dark font-semibold tracking-wide uppercase">Naša Prednost</h2>
+                    <p class="mt-2 text-4xl font-extrabold tracking-tight text-secondary-dark">
+                        Fokusirani na Kvalitet i Dugotrajnost
+                    </p>
+                </div>
+                <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
+                    <!-- Stat 1: Godine Iskustva -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition duration-300 fade-up">
+                        <p class="text-5xl font-extrabold text-primary-teal">15+</p>
+                        <h3 class="mt-4 text-xl font-bold text-secondary-dark">Godina Iskustva</h3>
+                        <p class="mt-2 text-gray-600">Dokazana ekspertiza u svim vrstama keramičarskih radova.</p>
+                    </div>
+                    
+                    <!-- Stat 2: Garancija na Rad -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition duration-300 fade-up" style="transition-delay: 0.1s;">
+                        <p class="text-5xl font-extrabold text-primary-teal">100%</p>
+                        <h3 class="mt-4 text-xl font-bold text-secondary-dark">Garancija na Izvođenje</h3>
+                        <p class="mt-2 text-gray-600">Pružamo potpunu garanciju na naš rad i ugrađene materijale.</p>
+                    </div>
+
+                    <!-- Stat 3: Zadovoljstvo Klijenta -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition duration-300 fade-up" style="transition-delay: 0.2s;">
+                        <p class="text-5xl font-extrabold text-primary-teal">9.8/10</p>
+                        <h3 class="mt-4 text-xl font-bold text-secondary-dark">Zadovoljstvo Klijenta</h3>
+                        <p class="mt-2 text-gray-600">Visoka ocena koju konstantno dobijamo od naših klijenata.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        ---
+        <!-- Sekcija Portfolijo (Galerija) -->
+        <section id="portfolio" class="py-20 bg-white fade-up">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-base text-primary-teal font-semibold tracking-wide uppercase">Naši Projekti</h2>
+                <p class="mt-2 text-4xl font-extrabold tracking-tight text-secondary-dark mb-12">
+                    Vizuelni Dokaz Naše Preciznosti
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Projekat 1: Luksuzno Kupatilo (AŽURIRANA SLIKA) --><div class="rounded-xl shadow-3d overflow-hidden group fade-up">
+                        <img class="h-64 w-full object-cover transition duration-500 group-hover:opacity-80 group-hover:scale-105" 
+                            src="https://images.unsplash.com/photo-1588825851493-27ce33ed1384?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Luksuzno kupatilo sa velikim formatima pločica"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/06B6D4/ffffff?text=Luksuzni+Enterijer'">
+                        <div class="p-6 text-left">
+                            <h3 class="text-xl font-bold text-secondary-dark">Kupatilo - Veliki Formati</h3>
+                            <p class="mt-2 text-gray-600">Moderna obrada 120x60 pločicama uz skrivenu odvodnju.</p>
+                        </div>
+                    </div>
+
+                    <!-- Projekat 2: Elegantna Terasa (AŽURIRANA SLIKA) --><div class="rounded-xl shadow-3d overflow-hidden group fade-up" style="transition-delay: 0.1s;">
+                        <img class="h-64 w-full object-cover transition duration-500 group-hover:opacity-80 group-hover:scale-105" 
+                            src="https://images.unsplash.com/photo-1594916895315-08168288d6c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Elegantna terasa sa protivkliznim pločicama"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/3B82F6/ffffff?text=Eksterijer+Terasa'">
+                        <div class="p-6 text-left">
+                            <h3 class="text-xl font-bold text-secondary-dark">Balkon - Podizanje Podova</h3>
+                            <p class="mt-2 text-gray-600">Spoljna ugradnja na podesive nosače za savršeno ravnu površinu.</p>
+                        </div>
+                    </div>
+
+                    <!-- Projekat 3: Rustična Kuhinja (AŽURIRANA SLIKA - Pod sa imitacijom drveta) --><div class="rounded-xl shadow-3d overflow-hidden group fade-up" style="transition-delay: 0.2s;">
+                        <img class="h-64 w-full object-cover transition duration-500 group-hover:opacity-80 group-hover:scale-105" 
+                            src="https://images.unsplash.com/photo-1549488349-e5879a95304a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Rustična kuhinja sa mozaikom i keramičkim podom"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/F97316/ffffff?text=Rustična+Kuhinja'">
+                        <div class="p-6 text-left">
+                            <h3 class="text-xl font-bold text-secondary-dark">Dnevni Boravak - Imitacija Drveta</h3>
+                            <p class="mt-2 text-gray-600">Ugradnja keramičkih pločica sa efektom drveta za topli izgled i trajnost.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        ---
+        <!-- Sekcija Kontakt (Sa mapom Placeholder-om) -->
+        <section id="contact" class="py-20 bg-bg-light fade-up">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="lg:grid lg:grid-cols-2 lg:gap-12">
+                    <div class="lg:py-12">
+                        <h2 class="text-base text-primary-teal font-semibold tracking-wide uppercase">Započnite Projekat</h2>
+                        <p class="mt-2 text-4xl font-extrabold tracking-tight text-secondary-dark">
+                            Spremni da Radimo?
+                        </p>
+                        <p class="mt-4 text-lg text-gray-600">
+                            Popunite formu ili nas direktno kontaktirajte za neobavezujuću procenu Vašeg keramičarskog projekta.
+                        </p>
+                        <div class="mt-8 space-y-6">
+                            <div class="flex items-center">
+                                <svg class="flex-shrink-0 h-6 w-6 text-primary-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <dd class="ml-4 text-base text-gray-700 font-medium">novakovic0002@gmail.com</dd>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="flex-shrink-0 h-6 w-6 text-primary-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2 2h-3.19a2 2 0 01-2-1.71 16.14 16.14 0 01-5.61-5.61A2 2 0 004.08 4H1a2 2 0 012-2V1a2 2 0 012-2h3.19a2 2 0 012 1.71 16.14 16.14 0 005.61 5.61 2 2 0 011.71 2z"></path></svg>
+                                <dd class="ml-4 text-base text-gray-700 font-medium">+387 65 446 747</dd>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 sm:mt-16 lg:mt-0">
+                        <!-- Kontakt Forma -->
+                        <div class="bg-white p-8 rounded-xl shadow-3d border-t-4 border-primary-teal">
+                            <h3 class="text-2xl font-bold text-secondary-dark mb-6">Brzi Upit</h3>
+                            <form action="#" method="POST" class="space-y-6">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700">Ime i Prezime</label>
+                                    <input type="text" name="name" id="name" autocomplete="name" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-teal focus:border-primary-teal sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                    <input type="email" name="email" id="email" autocomplete="email" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-teal focus:border-primary-teal sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="message" class="block text-sm font-medium text-gray-700">Opis Projekta</label>
+                                    <textarea id="message" name="message" rows="4" class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-teal focus:border-primary-teal sm:text-sm" placeholder="Opišite vrstu pločica, kvadraturu i lokaciju."></textarea>
+                                </div>
+                                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-md text-base font-medium text-white bg-primary-teal hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-teal transition duration-300">
+                                    Pošalji Upit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer --><footer class="bg-secondary-dark">
+        <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center">
+                <p class="text-base text-gray-400">
+                    &copy; 2024 Precizni Keramičarski Radovi. Moderna ugradnja i dizajn.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#services" class="text-gray-400 hover:text-primary-teal">Usluge</a>
+                    <a href="#portfolio" class="text-gray-400 hover:text-primary-teal">Portfolijo</a>
+                    <a href="#contact" class="text-gray-400 hover:text-primary-teal">Kontakt</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS za Mobilni Meni i ANIMACIJE -->
+    <script>
+        // Logika za mobilni meni
+        document.getElementById('mobile-menu-button').onclick = function() {
+            var menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        };
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Logika za Animacije (Scroll Reveal - Fade Up)
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Dodajemo 'visible' klasu kada je element vidljiv
+                    entry.target.classList.add('visible');
+                    // Prestajemo da posmatramo element
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, {
+            // Margin od 0px od dole pre nego što se element aktivira
+            rootMargin: '0px', 
+            threshold: 0.1 // Aktivira se kada 10% elementa uđe u viewport
+        });
+
+        // Posmatranje svih elemenata sa klasom 'fade-up'
+        document.querySelectorAll('.fade-up').forEach(element => {
+            observer.observe(element);
+        });
+
+    </script>
+
+</body>
+</html>
+
